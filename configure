@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Configure script for RoCEHammer CMake build
+# Configure script for CMake build
 #
 
 #############################################################################

@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 
 set(CMAKE_XCODE_ATTRIBUTE_GCC_VERSION "com.apple.compilers.clang.3_4")
 
-project(RdmaExperiments)
+project(MemoryExperiments)
 
 set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O3 -g -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g -DNDEBUG")
@@ -66,7 +66,7 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_RPATH}:${THIRD_PARTY_ROOT}/lib")
 # pre-compiled external dependencies
 include_directories("${THIRD_PARTY_ROOT}/include")
 link_directories("${THIRD_PARTY_ROOT}/lib")
-list(APPEND RDMA_EXPERIMENT_LIBS
+list(APPEND MEMORY_EXPERIMENT_LIBS
   gflags
   glog
 )
@@ -75,11 +75,11 @@ list(APPEND RDMA_EXPERIMENT_LIBS
 
 # TODO: actually check if PMI is available for this platform, possibly build it
 if(NOT APPLE)
-  list(APPEND RDMA_EXPERIMENT_LIBS pmi)
+  list(APPEND MEMORY_EXPERIMENT_LIBS pmi)
 endif()
 
 if(NOT APPLE)
-  list(APPEND RDMA_EXPERIMENT_LIBS pthread rt)
+  list(APPEND MEMORY_EXPERIMENT_LIBS pthread rt)
 endif()
 
 
@@ -126,23 +126,23 @@ else()
 endif()
 
 
-macro(add_rdma_exe target exe )
+macro(add_memory_exe target exe )
   add_executable(${target} EXCLUDE_FROM_ALL ${ARGN})
   set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_NAME "${exe}")
   target_link_libraries(${target} 
-    RdmaExperiments
+    MemoryExperiments
     ${MPI_CXX_LIBRARIES}
     ${Boost_LIBRARIES}
   )
-endmacro(add_rdma_exe)
+endmacro(add_memory_exe)
 
-macro(add_rdma_application name)
-  add_rdma_exe(${name} ${name} ${ARGN})
+macro(add_memory_application name)
+  add_memory_exe(${name} ${name} ${ARGN})
   set_property(TARGET ${name} PROPERTY FOLDER "Applications") # For organization in Xcode project
-endmacro(add_rdma_application)
+endmacro(add_memory_application)
 
 
-## put RDMA experiment src directory on include path for everything following this
+## put memory experiment src directory on include path for everything following this
 include_directories(src)
 
 ####################################

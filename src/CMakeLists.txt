@@ -5,15 +5,15 @@
 set(LIBRARY_SOURCES
   Verbs.cpp
 )
-add_library(RdmaExperiments
+add_library(MemoryExperiments
   ${LIBRARY_SOURCES}
 )
-target_link_libraries(RdmaExperiments ${RDMA_EXPERIMENT_LIBS} ${VERBS_LIB})
-add_dependencies(RdmaExperiments all-third-party)
+target_link_libraries(MemoryExperiments ${MEMORY_EXPERIMENT_LIBS} ${VERBS_LIB})
+add_dependencies(MemoryExperiments all-third-party)
 
 
 
 
 
-add_rdma_application(helloworld.exe "helloworld.cpp")
-add_rdma_application(experiments.exe "experiments.cpp")
+add_memory_application(helloworld.exe "helloworld.cpp")
+add_memory_application(experiments.exe "experiments.cpp")
